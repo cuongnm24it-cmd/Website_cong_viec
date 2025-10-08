@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ - SkillConnect</title>
+    <meta name="description" content="Liên hệ với SkillConnect để được hỗ trợ tốt nhất">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                    }
+                }
+            },
+            darkMode: 'class',
+        }
+    </script>
+    
+    <style>
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                        <i class="fas fa-handshake mr-2"></i>SkillConnect
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Trang chủ</a>
+                        <a href="jobs.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Việc làm</a>
+                        <a href="courses.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Khóa học</a>
+                        <a href="community.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Cộng đồng</a>
+                        <a href="contact.html" class="text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors">Liên hệ</a>
+                    </div>
+                </div>
+
+                <!-- Right side buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                        <i id="theme-icon" class="fas fa-moon text-gray-700 dark:text-gray-300"></i>
+                    </button>
+                    
+                    <!-- User Menu -->
+                    <div id="user-menu" class="relative hidden">
+                        <button id="user-avatar" class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                            <img class="h-8 w-8 rounded-full" src="https://via.placeholder.com/32x32/3b82f6/ffffff?text=U" alt="User">
+                            <span class="text-sm font-medium" id="user-name">Người dùng</span>
+                        </button>
+                        <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hidden">
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Hồ sơ</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Đăng xuất</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Auth Buttons -->
+                    <div id="auth-buttons">
+                        <button onclick="showLoginModal()" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            Đăng nhập
+                        </button>
+                        <button onclick="showRegisterModal()" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            Đăng ký
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium">Trang chủ</a>
+                <a href="jobs.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium">Việc làm</a>
+                <a href="courses.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium">Khóa học</a>
+                <a href="community.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium">Cộng đồng</a>
+                <a href="contact.html" class="text-primary-600 dark:text-primary-400 block px-3 py-2 text-base font-medium">Liên hệ</a>
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-2">
+                    <button onclick="showLoginModal()" class="text-gray-600 dark:text-gray-300 block px-3 py-2 text-base font-medium w-full text-left">
+                        Đăng nhập
+                    </button>
+                    <button onclick="showRegisterModal()" class="text-primary-600 dark:text-primary-400 block px-3 py-2 text-base font-medium w-full text-left">
+                        Đăng ký
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                Liên hệ với chúng tôi
+            </h1>
+            <p class="text-xl opacity-90 max-w-2xl mx-auto">
+                Chúng tôi luôn sẵn sàng hỗ trợ bạn. Hãy liên hệ với chúng tôi qua các kênh bên dưới.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                        Gửi tin nhắn cho chúng tôi
+                    </h2>
+                    <form id="contact-form" onsubmit="submitContactForm(event)">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Họ tên <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="contact-name" required 
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Email <span class="text-red-500">*</span>
+                                </label>
+                                <input type="email" id="contact-email" required 
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Số điện thoại
+                            </label>
+                            <input type="tel" id="contact-phone" 
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Chủ đề <span class="text-red-500">*</span>
+                            </label>
+                            <select id="contact-subject" required 
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                                <option value="">Chọn chủ đề</option>
+                                <option value="general">Thông tin chung</option>
+                                <option value="support">Hỗ trợ kỹ thuật</option>
+                                <option value="jobs">Về việc làm</option>
+                                <option value="courses">Về khóa học</option>
+                                <option value="partnership">Hợp tác</option>
+                                <option value="other">Khác</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Nội dung <span class="text-red-500">*</span>
+                            </label>
+                            <textarea id="contact-message" required rows="6" 
+                                placeholder="Mô tả chi tiết câu hỏi hoặc yêu cầu của bạn..."
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white"></textarea>
+                        </div>
+                        
+                        <button type="submit" 
+                            class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Gửi tin nhắn
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <!-- Contact Details -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                            Thông tin liên hệ
+                        </h2>
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-primary-100 dark:bg-primary-900 p-3 rounded-lg">
+                                    <i class="fas fa-map-marker-alt text-primary-600 dark:text-primary-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Địa chỉ</h3>
+                                    <p class="text-gray-600 dark:text-gray-300">
+                                        123 Đường Nguyễn Huệ, Quận 1<br>
+                                        Thành phố Hồ Chí Minh, Việt Nam
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-green-100 dark:bg-green-900 p-3 rounded-lg">
+                                    <i class="fas fa-phone text-green-600 dark:text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Điện thoại</h3>
+                                    <p class="text-gray-600 dark:text-gray-300">
+                                        <a href="tel:+84901234567" class="hover:text-primary-600">+84 901 234 567</a><br>
+                                        <a href="tel:+84907654321" class="hover:text-primary-600">+84 907 654 321</a>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-red-100 dark:bg-red-900 p-3 rounded-lg">
+                                    <i class="fas fa-envelope text-red-600 dark:text-red-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Email</h3>
+                                    <p class="text-gray-600 dark:text-gray-300">
+                                        <a href="mailto:info@skillconnect.vn" class="hover:text-primary-600">info@skillconnect.vn</a><br>
+                                        <a href="mailto:support@skillconnect.vn" class="hover:text-primary-600">support@skillconnect.vn</a>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-yellow-100 dark:bg-yellow-900 p-3 rounded-lg">
+                                    <i class="fas fa-clock text-yellow-600 dark:text-yellow-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Giờ làm việc</h3>
+                                    <p class="text-gray-600 dark:text-gray-300">
+                                        Thứ 2 - Thứ 6: 8:00 - 18:00<br>
+                                        Thứ 7: 9:00 - 16:00<br>
+                                        Chủ nhật: Nghỉ
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                            Theo dõi chúng tôi
+                        </h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="#" class="flex items-center space-x-3 p-4 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-lg transition-colors">
+                                <i class="fab fa-facebook text-2xl text-blue-600"></i>
+                                <span class="font-medium text-blue-600">Facebook</span>
+                            </a>
+                            <a href="#" class="flex items-center space-x-3 p-4 bg-sky-50 dark:bg-sky-900/20 hover:bg-sky-100 dark:hover:bg-sky-900/40 rounded-lg transition-colors">
+                                <i class="fab fa-linkedin text-2xl text-sky-600"></i>
+                                <span class="font-medium text-sky-600">LinkedIn</span>
+                            </a>
+                            <a href="#" class="flex items-center space-x-3 p-4 bg-cyan-50 dark:bg-cyan-900/20 hover:bg-cyan-100 dark:hover:bg-cyan-900/40 rounded-lg transition-colors">
+                                <i class="fab fa-twitter text-2xl text-cyan-600"></i>
+                                <span class="font-medium text-cyan-600">Twitter</span>
+                            </a>
+                            <a href="#" class="flex items-center space-x-3 p-4 bg-pink-50 dark:bg-pink-900/20 hover:bg-pink-100 dark:hover:bg-pink-900/40 rounded-lg transition-colors">
+                                <i class="fab fa-instagram text-2xl text-pink-600"></i>
+                                <span class="font-medium text-pink-600">Instagram</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Signup -->
+                    <div class="bg-gradient-to-r from-primary-600 to-purple-600 p-8 rounded-lg text-white">
+                        <h2 class="text-2xl font-bold mb-4">
+                            Đăng ký nhận tin
+                        </h2>
+                        <p class="mb-6 opacity-90">
+                            Nhận thông tin mới nhất về việc làm và khóa học
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input type="email" id="footer-newsletter-email" 
+                                placeholder="Email của bạn"
+                                class="flex-1 px-4 py-2 text-gray-900 rounded-lg focus:ring-2 focus:ring-white focus:outline-none">
+                            <button onclick="subscribeNewsletter()" 
+                                class="px-6 py-2 bg-white text-primary-600 hover:bg-gray-100 rounded-lg font-semibold transition-colors">
+                                Đăng ký
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white dark:bg-gray-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                    Câu hỏi thường gặp
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300">
+                    Tìm câu trả lời cho những câu hỏi phổ biến
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <button onclick="toggleFAQ(1)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                SkillConnect hoạt động như thế nào?
+                            </h3>
+                            <i class="fas fa-chevron-down text-gray-500 transform transition-transform" id="faq-icon-1"></i>
+                        </div>
+                    </button>
+                    <div id="faq-content-1" class="hidden px-6 pb-6">
+                        <p class="text-gray-600 dark:text-gray-300">
+                            SkillConnect là nền tảng kết nối ứng viên với nhà tuyển dụng, đồng thời cung cấp các khóa học kỹ năng số. 
+                            Bạn có thể tạo hồ sơ, tìm kiếm việc làm phù hợp, học các khóa học để nâng cao kỹ năng và kết nối với cộng đồng chuyên gia.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <button onclick="toggleFAQ(2)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                Việc sử dụng SkillConnect có miễn phí không?
+                            </h3>
+                            <i class="fas fa-chevron-down text-gray-500 transform transition-transform" id="faq-icon-2"></i>
+                        </div>
+                    </button>
+                    <div id="faq-content-2" class="hidden px-6 pb-6">
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Việc tạo tài khoản, tìm kiếm việc làm và truy cập các khóa học miễn phí là hoàn toàn free. 
+                            Một số khóa học cao cấp và tính năng premium sẽ có phí, nhưng chúng tôi luôn có nhiều lựa chọn miễn phí chất lượng.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <button onclick="toggleFAQ(3)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                Làm sao để tăng cơ hội được tuyển dụng?
+                            </h3>
+                            <i class="fas fa-chevron-down text-gray-500 transform transition-transform" id="faq-icon-3"></i>
+                        </div>
+                    </button>
+                    <div id="faq-content-3" class="hidden px-6 pb-6">
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Hãy hoàn thiện hồ sơ cá nhân, tham gia các khóa học để nâng cao kỹ năng, viết CV chuyên nghiệp và 
+                            thường xuyên cập nhật thông tin. Đồng thời, hãy tích cực ứng tuyển các vị trí phù hợp và kết nối với các chuyên gia trong ngành.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <button onclick="toggleFAQ(4)" class="w-full text-left p-6 focus:outline-none">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                Doanh nghiệp có thể đăng tin tuyển dụng như thế nào?
+                            </h3>
+                            <i class="fas fa-chevron-down text-gray-500 transform transition-transform" id="faq-icon-4"></i>
+                        </div>
+                    </button>
+                    <div id="faq-content-4" class="hidden px-6 pb-6">
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Doanh nghiệp cần đăng ký tài khoản nhà tuyển dụng, xác thực thông tin công ty, sau đó có thể đăng tin tuyển dụng. 
+                            Chúng tôi hỗ trợ đa dạng gói dịch vụ từ cơ bản đến cao cấp để đáp ứng nhu cầu tuyển dụng của mọi quy mô doanh nghiệp.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-handshake text-2xl text-primary-400 mr-2"></i>
+                        <span class="text-2xl font-bold">SkillConnect</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md">
+                        Nền tảng kết nối ứng viên tìm việc với doanh nghiệp, đồng thời cung cấp kho học liệu & kỹ năng số để phát triển sự nghiệp.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liên kết nhanh</h3>
+                    <ul class="space-y-2">
+                        <li><a href="jobs.html" class="text-gray-300 hover:text-primary-400 transition-colors">Việc làm</a></li>
+                        <li><a href="courses.html" class="text-gray-300 hover:text-primary-400 transition-colors">Khóa học</a></li>
+                        <li><a href="community.html" class="text-gray-300 hover:text-primary-400 transition-colors">Cộng đồng</a></li>
+                        <li><a href="profile.html" class="text-gray-300 hover:text-primary-400 transition-colors">Hồ sơ</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-primary-400 transition-colors">Liên hệ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Hỗ trợ</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-primary-400 transition-colors">Câu hỏi thường gặp</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary-400 transition-colors">Điều khoản sử dụng</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary-400 transition-colors">Chính sách bảo mật</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary-400 transition-colors">Trung tâm hỗ trợ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 mt-8 text-center">
+                <p class="text-gray-400">
+                    &copy; 2024 SkillConnect. Tất cả quyền được bảo lưu.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Đăng nhập</h2>
+                <button onclick="closeModal('login-modal')" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    <input type="email" id="login-email" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mật khẩu</label>
+                    <input type="password" id="login-password" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                    Đăng nhập
+                </button>
+                <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+                    Chưa có tài khoản? 
+                    <button type="button" onclick="showRegisterModal(); closeModal('login-modal');" class="text-primary-600 dark:text-primary-400 hover:underline">
+                        Đăng ký ngay
+                    </button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Đăng ký</h2>
+                <button onclick="closeModal('register-modal')" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="register-form" onsubmit="handleRegister(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Họ tên</label>
+                    <input type="text" id="register-fullname" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    <input type="email" id="register-email" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mật khẩu</label>
+                    <input type="password" id="register-password" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Loại tài khoản</label>
+                    <select id="register-usertype" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                        <option value="candidate">Ứng viên tìm việc</option>
+                        <option value="employer">Nhà tuyển dụng</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                    Đăng ký
+                </button>
+                <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+                    Đã có tài khoản? 
+                    <button type="button" onclick="showLoginModal(); closeModal('register-modal');" class="text-primary-600 dark:text-primary-400 hover:underline">
+                        Đăng nhập ngay
+                    </button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Contact form submission
+        async function submitContactForm(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const phone = document.getElementById('contact-phone').value;
+            const subject = document.getElementById('contact-subject').value;
+            const message = document.getElementById('contact-message').value;
+            
+            if (!name || !email || !subject || !message) {
+                showNotification('Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showNotification('Email không hợp lệ', 'error');
+                return;
+            }
+            
+            try {
+                // In real app, this would send to contact API
+                console.log('Contact form submitted:', { name, email, phone, subject, message });
+                
+                // Reset form
+                document.getElementById('contact-form').reset();
+                showNotification('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.', 'success');
+            } catch (error) {
+                console.error('Error submitting contact form:', error);
+                showNotification('Có lỗi xảy ra khi gửi tin nhắn', 'error');
+            }
+        }
+        
+        // Newsletter subscription
+        async function subscribeNewsletter() {
+            const emailInput = document.getElementById('footer-newsletter-email');
+            const email = emailInput.value.trim();
+            
+            if (!email) {
+                showNotification('Vui lòng nhập email', 'error');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showNotification('Email không hợp lệ', 'error');
+                return;
+            }
+            
+            try {
+                await postData('newsletters', {
+                    email: email,
+                    name: '',
+                    subscribed: true,
+                    preferences: ['news', 'jobs', 'courses']
+                });
+                
+                emailInput.value = '';
+                showNotification('Đăng ký nhận tin thành công!', 'success');
+            } catch (error) {
+                console.error('Newsletter subscription error:', error);
+                showNotification('Có lỗi xảy ra khi đăng ký', 'error');
+            }
+        }
+        
+        // FAQ toggle
+        function toggleFAQ(id) {
+            const content = document.getElementById(`faq-content-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

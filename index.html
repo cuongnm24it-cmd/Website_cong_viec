@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillConnect - Nền tảng Tuyển dụng & Kỹ năng số</title>
+    <meta name="description" content="Kết nối ứng viên tìm việc với doanh nghiệp, đồng thời cung cấp kho học liệu & kỹ năng số">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'fade-in-down': 'fadeInDown 0.8s ease-out',
+                        'slide-in-left': 'slideInLeft 0.8s ease-out',
+                        'slide-in-right': 'slideInRight 0.8s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeInDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(30px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                    },
+                }
+            },
+            darkMode: 'class',
+        }
+    </script>
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                        <i class="fas fa-handshake mr-2"></i>SkillConnect
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 px-3 py-2 rounded-md text-sm font-medium transition-colors">Trang chủ</a>
+                        <a href="jobs.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Việc làm</a>
+                        <a href="courses.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Khóa học</a>
+                        <a href="community.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Cộng đồng</a>
+                        <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Liên hệ</a>
+                    </div>
+                </div>
+
+                <!-- Right side buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                        <i id="theme-icon" class="fas fa-moon text-gray-700 dark:text-gray-300"></i>
+                    </button>
+                    
+                    <!-- User Menu -->
+                    <div id="user-menu" class="hidden">
+                        <button id="user-avatar" class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                            <img class="h-8 w-8 rounded-full" src="https://via.placeholder.com/32x32/3b82f6/ffffff?text=U" alt="User">
+                            <span class="text-sm font-medium" id="user-name">Người dùng</span>
+                        </button>
+                        <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hidden">
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Hồ sơ</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Đăng xuất</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Auth Buttons -->
+                    <div id="auth-buttons">
+                        <button onclick="showLoginModal()" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            Đăng nhập
+                        </button>
+                        <button onclick="showRegisterModal()" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            Đăng ký
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="text-primary-600 dark:text-primary-400 block px-3 py-2 text-base font-medium">Trang chủ</a>
+                <a href="jobs.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium">Việc làm</a>
+                <a href="courses.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium">Khóa học</a>
+                <a href="community.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium">Cộng đồng</a>
+                <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium">Liên hệ</a>
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-2">
+                    <button onclick="showLoginModal()" class="text-gray-600 dark:text-gray-300 block px-3 py-2 text-base font-medium w-full text-left">
+                        Đăng nhập
+                    </button>
+                    <button onclick="showRegisterModal()" class="text-primary-600 dark:text-primary-400 block px-3 py-2 text-base font-medium w-full text-left">
+                        Đăng ký
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center gradient-bg overflow-hidden">
+        <!-- Background Animation -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full animate-pulse-slow"></div>
+            <div class="absolute top-32 right-20 w-16 h-16 bg-white rounded-full animate-pulse-slow" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-20 left-20 w-12 h-12 bg-white rounded-full animate-pulse-slow" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-32 right-32 w-24 h-24 bg-white rounded-full animate-pulse-slow" style="animation-delay: 0.5s;"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+            <div class="animate-fade-in-up">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    Find Jobs, Build Skills,<br>
+                    <span class="text-yellow-300">Shape Your Future</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-gray-100 max-w-3xl mx-auto">
+                    Kết nối ứng viên tìm việc với doanh nghiệp, đồng thời cung cấp kho học liệu & kỹ năng số để phát triển sự nghiệp
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="jobs.html" class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover-scale inline-flex items-center">
+                        <i class="fas fa-search mr-2"></i>
+                        Tìm việc ngay
+                    </a>
+                    <a href="courses.html" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover-scale inline-flex items-center">
+                        <i class="fas fa-graduation-cap mr-2"></i>
+                        Khám phá kỹ năng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-white text-2xl opacity-70"></i>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 animate-fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                    Tại sao chọn SkillConnect?
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Chúng tôi mang đến giải pháp toàn diện cho cả người tìm việc và nhà tuyển dụng
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="text-center animate-slide-in-left hover-scale">
+                    <div class="bg-primary-100 dark:bg-primary-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-handshake text-2xl text-primary-600 dark:text-primary-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Kết nối thông minh</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Hệ thống matching thông minh giúp kết nối ứng viên phù hợp với nhà tuyển dụng dựa trên kỹ năng và kinh nghiệm
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="text-center animate-fade-in-up hover-scale" style="animation-delay: 0.2s;">
+                    <div class="bg-green-100 dark:bg-green-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-graduation-cap text-2xl text-green-600 dark:text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Học tập liên tục</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Kho học liệu phong phú và các khóa học kỹ năng số giúp bạn nâng cao năng lực chuyên môn
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="text-center animate-slide-in-right hover-scale" style="animation-delay: 0.4s;">
+                    <div class="bg-purple-100 dark:bg-purple-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-chart-line text-2xl text-purple-600 dark:text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Phát triển sự nghiệp</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Công cụ theo dõi và phân tích giúp bạn xác định con đường phát triển sự nghiệp phù hợp
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-primary-600 dark:bg-primary-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center text-white">
+                <div class="animate-fade-in-up">
+                    <div class="text-4xl font-bold mb-2" id="jobs-count">1000+</div>
+                    <div class="text-lg opacity-90">Việc làm</div>
+                </div>
+                <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+                    <div class="text-4xl font-bold mb-2" id="companies-count">500+</div>
+                    <div class="text-lg opacity-90">Doanh nghiệp</div>
+                </div>
+                <div class="animate-fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="text-4xl font-bold mb-2" id="candidates-count">10000+</div>
+                    <div class="text-lg opacity-90">Ứng viên</div>
+                </div>
+                <div class="animate-fade-in-up" style="animation-delay: 0.3s;">
+                    <div class="text-4xl font-bold mb-2" id="courses-count">100+</div>
+                    <div class="text-lg opacity-90">Khóa học</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Jobs Section -->
+    <section class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                    Việc làm mới nhất
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300">
+                    Khám phá những cơ hội việc làm hấp dẫn từ các doanh nghiệp hàng đầu
+                </p>
+            </div>
+
+            <div id="featured-jobs" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Featured jobs will be loaded here -->
+            </div>
+
+            <div class="text-center">
+                <a href="jobs.html" class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors hover-scale inline-flex items-center">
+                    <span>Xem tất cả việc làm</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Courses Section -->
+    <section class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                    Khóa học nổi bật
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300">
+                    Nâng cao kỹ năng với các khóa học chất lượng từ các chuyên gia hàng đầu
+                </p>
+            </div>
+
+            <div id="featured-courses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Featured courses will be loaded here -->
+            </div>
+
+            <div class="text-center">
+                <a href="courses.html" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors hover-scale inline-flex items-center">
+                    <span>Khám phá tất cả khóa học</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-bg">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <div class="text-white animate-fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    Sẵn sàng bắt đầu hành trình mới?
+                </h2>
+                <p class="text-xl mb-8 opacity-90">
+                    Tham gia SkillConnect ngay hôm nay để mở ra những cơ hội việc làm và phát triển kỹ năng tuyệt vời
+                </p>
+                <button onclick="showRegisterModal()" class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover-scale inline-flex items-center">
+                    <i class="fas fa-rocket mr-2"></i>
+                    Đăng ký ngay
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-handshake text-2xl text-primary-400 mr-2"></i>
+                        <span class="text-2xl font-bold">SkillConnect</span>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md">
+                        Nền tảng kết nối ứng viên tìm việc với doanh nghiệp, đồng thời cung cấp kho học liệu & kỹ năng số để phát triển sự nghiệp.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Liên kết nhanh</h3>
+                    <ul class="space-y-2">
+                        <li><a href="jobs.html" class="text-gray-300 hover:text-primary-400 transition-colors">Việc làm</a></li>
+                        <li><a href="courses.html" class="text-gray-300 hover:text-primary-400 transition-colors">Khóa học</a></li>
+                        <li><a href="community.html" class="text-gray-300 hover:text-primary-400 transition-colors">Cộng đồng</a></li>
+                        <li><a href="profile.html" class="text-gray-300 hover:text-primary-400 transition-colors">Hồ sơ</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-primary-400 transition-colors">Liên hệ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Hỗ trợ</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-primary-400 transition-colors">Câu hỏi thường gặp</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary-400 transition-colors">Điều khoản sử dụng</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary-400 transition-colors">Chính sách bảo mật</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary-400 transition-colors">Trung tâm hỗ trợ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 mt-8 text-center">
+                <p class="text-gray-400">
+                    &copy; 2024 SkillConnect. Tất cả quyền được bảo lưu.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4 animate-fade-in-up">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Đăng nhập</h2>
+                <button onclick="closeModal('login-modal')" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    <input type="email" id="login-email" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mật khẩu</label>
+                    <input type="password" id="login-password" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                    Đăng nhập
+                </button>
+                <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+                    Chưa có tài khoản? 
+                    <button type="button" onclick="showRegisterModal(); closeModal('login-modal');" class="text-primary-600 dark:text-primary-400 hover:underline">
+                        Đăng ký ngay
+                    </button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4 animate-fade-in-up">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Đăng ký</h2>
+                <button onclick="closeModal('register-modal')" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="register-form" onsubmit="handleRegister(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Họ tên</label>
+                    <input type="text" id="register-fullname" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    <input type="email" id="register-email" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mật khẩu</label>
+                    <input type="password" id="register-password" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Loại tài khoản</label>
+                    <select id="register-usertype" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:text-white">
+                        <option value="candidate">Ứng viên tìm việc</option>
+                        <option value="employer">Nhà tuyển dụng</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                    Đăng ký
+                </button>
+                <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+                    Đã có tài khoản? 
+                    <button type="button" onclick="showLoginModal(); closeModal('register-modal');" class="text-primary-600 dark:text-primary-400 hover:underline">
+                        Đăng nhập ngay
+                    </button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Load featured content on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFeaturedJobs();
+            loadFeaturedCourses();
+            animateStats();
+            checkAuthStatus();
+        });
+
+        // Load featured jobs
+        async function loadFeaturedJobs() {
+            try {
+                const response = await fetch('tables/jobs?limit=6&featured=true');
+                const data = await response.json();
+                
+                const container = document.getElementById('featured-jobs');
+                container.innerHTML = '';
+                
+                data.data.forEach(job => {
+                    const jobCard = createJobCard(job);
+                    container.appendChild(jobCard);
+                });
+            } catch (error) {
+                console.error('Error loading featured jobs:', error);
+            }
+        }
+
+        // Load featured courses
+        async function loadFeaturedCourses() {
+            try {
+                const response = await fetch('tables/courses?limit=6&featured=true');
+                const data = await response.json();
+                
+                const container = document.getElementById('featured-courses');
+                container.innerHTML = '';
+                
+                data.data.forEach(course => {
+                    const courseCard = createCourseCard(course);
+                    container.appendChild(courseCard);
+                });
+            } catch (error) {
+                console.error('Error loading featured courses:', error);
+            }
+        }
+
+        // Create job card element
+        function createJobCard(job) {
+            const div = document.createElement('div');
+            div.className = 'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow hover-scale border border-gray-200 dark:border-gray-700';
+            
+            div.innerHTML = `
+                <div class="flex items-start justify-between mb-4">
+                    <img src="${job.companyLogo || 'https://via.placeholder.com/50x50/3b82f6/ffffff?text=C'}" 
+                         alt="${job.company}" class="w-12 h-12 rounded-lg">
+                    ${job.featured ? '<span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Nổi bật</span>' : ''}
+                </div>
+                <h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white">${job.title}</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-2">${job.company}</p>
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-sm">
+                        <i class="fas fa-map-marker-alt mr-1"></i>${job.location}
+                    </span>
+                    <span class="bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 px-2 py-1 rounded text-sm">
+                        ${job.salary}
+                    </span>
+                </div>
+                <div class="flex flex-wrap gap-1 mb-4">
+                    ${job.skills.slice(0, 3).map(skill => 
+                        `<span class="bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded-full text-xs">${skill}</span>`
+                    ).join('')}
+                </div>
+                <a href="job-detail.html?id=${job.id}" class="block w-full text-center bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                    Xem chi tiết
+                </a>
+            `;
+            
+            return div;
+        }
+
+        // Create course card element
+        function createCourseCard(course) {
+            const div = document.createElement('div');
+            div.className = 'bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow hover-scale border border-gray-200 dark:border-gray-700 overflow-hidden';
+            
+            div.innerHTML = `
+                <img src="${course.thumbnail}" alt="${course.title}" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="bg-${course.level === 'beginner' ? 'green' : course.level === 'intermediate' ? 'yellow' : 'red'}-100 
+                               text-${course.level === 'beginner' ? 'green' : course.level === 'intermediate' ? 'yellow' : 'red'}-800 
+                               text-xs px-2 py-1 rounded-full">${course.level}</span>
+                        ${course.featured ? '<span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Nổi bật</span>' : ''}
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white">${course.title}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-3">Giảng viên: ${course.instructor}</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center text-yellow-500">
+                            <i class="fas fa-star"></i>
+                            <span class="ml-1 text-gray-600 dark:text-gray-300">${course.rating}</span>
+                        </div>
+                        <span class="text-gray-600 dark:text-gray-300">${course.students} học viên</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                            ${course.price === 0 ? 'Miễn phí' : course.price.toLocaleString() + 'đ'}
+                        </span>
+                        <a href="course-detail.html?id=${course.id}" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+                            Xem khóa học
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Animate statistics
+        function animateStats() {
+            const stats = [
+                { id: 'jobs-count', target: 1000 },
+                { id: 'companies-count', target: 500 },
+                { id: 'candidates-count', target: 10000 },
+                { id: 'courses-count', target: 100 }
+            ];
+
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.id);
+                let current = 0;
+                const increment = stat.target / 100;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= stat.target) {
+                        current = stat.target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current).toLocaleString() + '+';
+                }, 20);
+            });
+        }
+    </script>
+</body>
+</html>

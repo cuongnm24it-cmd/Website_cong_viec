@@ -1,0 +1,16 @@
+{
+  "name": "website_cong_viec",
+  "version": "1.0.0",
+  "description": "## 🎯 Mục tiêu dự án",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "multer": "^2.0.2"
+  }
+}
