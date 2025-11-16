@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết khóa học - SkillConnect</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -55,20 +56,51 @@
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        /* Thêm style cho tab và bài học */
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .active-tab {
+            background-color: #3b82f6; /* primary-500 */
+            color: white;
+        }
+        .inactive-tab {
+            color: #4b5563; /* gray-600 */
+        }
+        .dark .inactive-tab {
+            color: #d1d5db; /* gray-300 */
+        }
+        .inactive-tab:hover {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        .dark .inactive-tab:hover {
+            background-color: #374151; /* gray-700 */
+        }
+        
+        .active-lesson {
+            background-color: #dbeafe; /* primary-100 */
+            font-weight: 600;
+        }
+        .dark .active-lesson {
+            background-color: #1e40af; /* primary-800 */
+        }
     </style>
 </head>
 <body class="font-inter bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
-    <!-- Navigation -->
     <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
                 <div class="flex-shrink-0">
                     <a href="index.html" class="text-2xl font-bold text-primary-600 dark:text-primary-400">
                         <i class="fas fa-handshake mr-2"></i>SkillConnect
                     </a>
                 </div>
-                <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Trang chủ</a>
@@ -78,13 +110,10 @@
                         <a href="contact.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Liên hệ</a>
                     </div>
                 </div>
-                <!-- Right side buttons -->
                 <div class="hidden md:flex items-center space-x-4">
-                    <!-- Theme Toggle -->
                     <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
                         <i id="theme-icon" class="fas fa-moon text-gray-700 dark:text-gray-300"></i>
                     </button>
-                    <!-- User Menu -->
                     <div id="user-menu" class="relative hidden">
                         <button id="user-avatar" class="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
                             <img class="h-8 w-8 rounded-full" src="https://via.placeholder.com/32x32/3b82f6/ffffff?text=U" alt="User">
@@ -95,7 +124,6 @@
                             <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Đăng xuất</a>
                         </div>
                     </div>
-                    <!-- Auth Buttons -->
                     <div id="auth-buttons">
                         <button onclick="showLoginModal()" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                             Đăng nhập
@@ -105,7 +133,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- Mobile menu button -->
                 <div class="md:hidden">
                     <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 p-2">
                         <i class="fas fa-bars text-xl"></i>
@@ -113,7 +140,6 @@
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 block px-3 py-2 text-base font-medium">Trang chủ</a>
@@ -133,16 +159,14 @@
         </div>
     </nav>
 
-    <!-- Course Details Section -->
     <section class="container mx-auto px-4 py-24">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 course-card hover-scale">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 course-card">
             <h1 class="text-3xl font-bold mb-4" id="course-title">Tên khóa học</h1>
             <div class="flex flex-col md:flex-row gap-6">
-                <!-- Course Info -->
                 <div class="md:w-2/3">
                     <div class="mb-4">
                         <h2 class="text-xl font-semibold">Mô tả khóa học</h2>
-                        <p id="course-description" class="text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p id="course-description" class="text-gray-600 dark:text-gray-300">Mô tả khóa học sẽ được tải ở đây.</p>
                     </div>
                     <div class="mb-4">
                         <h2 class="text-xl font-semibold">Thông tin chi tiết</h2>
@@ -169,24 +193,84 @@
                             </tr>
                         </table>
                     </div>
-                    <button id="start-course-btn" class="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors">Bắt đầu học</button>
                 </div>
-                <!-- Course Image -->
                 <div class="md:w-1/3">
                     <img id="course-image" src="https://via.placeholder.com/300" alt="Course Image" class="w-full rounded-lg">
                 </div>
             </div>
-            <!-- Video Section (Initially Hidden) -->
-            <div id="video-section" class="mt-6 hidden">
-                <h2 class="text-xl font-semibold mb-4">Video khóa học</h2>
-                <div class="relative" style="padding-top: 56.25%;">
-                    <iframe id="course-video" class="absolute top-0 left-0 w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+            
+            <div id="course-content-section" class="mt-8">
+                <h2 class="text-2xl font-bold mb-4">Nội dung khóa học</h2>
+                <div class="flex flex-col md:flex-row gap-8">
+                    
+                    <div class="md:w-3/4 bg-gray-100 dark:bg-gray-900 rounded-lg p-4">
+                        
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-semibold">Nội dung bài học</h3>
+                            <button id="export-pdf-btn" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm">
+                                <i class="fas fa-file-pdf mr-2"></i>Tải PDF bài học
+                            </button>
+                        </div>
+                        
+                        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                            <nav class="flex space-x-2" aria-label="Tabs">
+                                <button id="tab-video" class="tab-btn active-tab">
+                                    <i class="fas fa-video mr-2"></i>Video
+                                </button>
+                                <button id="tab-text" class="tab-btn inactive-tab">
+                                    <i class="fas fa-file-alt mr-2"></i>Bài đọc
+                                </button>
+                                <button id="tab-quiz" class="tab-btn inactive-tab">
+                                    <i class="fas fa-tasks mr-2"></i>Kiểm tra
+                                </button>
+                            </nav>
+                        </div>
+                        
+                        <div id="tab-content-video" class="tab-panel">
+                            <div class="relative bg-black rounded-lg overflow-hidden" style="padding-top: 56.25%;">
+                                <iframe id="course-video-player" class="absolute top-0 left-0 w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div id="tab-content-text" class="tab-panel hidden p-2">
+                            </div>
+                        
+                        <div id="tab-content-quiz" class="tab-panel hidden p-4">
+                            <form id="quiz-form">
+                                <div id="quiz-questions-container" class="space-y-6">
+                                    </div>
+                                <button type="submit" class="mt-6 bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                                    Nộp bài
+                                </button>
+                            </form>
+                            <div id="quiz-result" class="mt-4 hidden">
+                                <h3 class="text-lg font-bold">Kết quả:</h3>
+                                <p id="quiz-score-text" class="text-lg"></p>
+                                <button id="quiz-retry-btn" class="mt-2 text-sm text-primary-600 hover:underline">
+                                    Làm lại
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:w-1/4">
+                        <h3 class="text-lg font-bold mb-4">Danh sách bài học</h3>
+                        
+                        <div class="mb-4">
+                            <p class="text-sm font-medium mb-1" id="progress-text">Hoàn thành: 0/0 (0%)</p>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                                <div id="progress-bar" class="bg-primary-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div id="curriculum-list" class="space-y-2 max-h-96 overflow-y-auto">
+                            <p>Đang tải danh sách bài học...</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            </div>
     </section>
 
-    <!-- Login Modal -->
     <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
@@ -217,7 +301,6 @@
         </div>
     </div>
 
-    <!-- Register Modal -->
     <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
@@ -259,11 +342,9 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="bg-gray-900 dark:bg-black text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Company Info -->
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center mb-4">
                         <i class="fas fa-handshake text-2xl text-primary-400 mr-2"></i>
@@ -273,7 +354,6 @@
                         Nền tảng kết nối ứng viên tìm việc với doanh nghiệp, đồng thời cung cấp kho học liệu & kỹ năng số để phát triển sự nghiệp.
                     </p>
                 </div>
-                <!-- Quick Links -->
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Liên kết nhanh</h3>
                     <ul class="space-y-2">
@@ -281,10 +361,9 @@
                         <li><a href="courses.html" class="text-gray-300 hover:text-primary-400 transition-colors">Khóa học</a></li>
                         <li><a href="community.html" class="text-gray-300 hover:text-primary-400 transition-colors">Cộng đồng</a></li>
                         <li><a href="profile.html" class="text-gray-300 hover:text-primary-400 transition-colors">Hồ sơ</a></li>
-                        <li><a href="contact.html" class="text-gray-300 hover:text-primary-400 transition-colors">Liên hệ</a></li>
+                        <li><a href="contact.html" classD="text-gray-300 hover:text-primary-400 transition-colors">Liên hệ</a></li>
                     </ul>
                 </div>
-                <!-- Support -->
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Hỗ trợ</h3>
                     <ul class="space-y-2">
@@ -303,7 +382,6 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
     <script src="models/courses.js"></script>
